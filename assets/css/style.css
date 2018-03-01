@@ -1,0 +1,47 @@
+#game {
+    display: inline-block;
+}
+h3 {
+    line-height: 40px;
+    text-align: center;
+}
+
+h1 {
+    line-height: 100px;
+    text-align: center;
+}
+button {
+    align-content: center;
+}
+
+.col-12 {
+    align-content: center;
+}
+
+.row {
+    width: 100%;
+    margin: auto;
+}
+
+#question {
+    text-align: center;
+    font-size: 40px;
+    font-weight: 700;
+}
+
+#answers {
+    font-size: 25px;
+}
+
+.col-5 {
+    display: inline-block;
+}
+
+#timer-display {
+    color: blue;
+    font-size: 80px;
+    line-height: 100px;
+}
+#qanda {
+    vertical-align: top;
+}
