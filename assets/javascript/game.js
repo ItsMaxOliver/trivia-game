@@ -5,8 +5,6 @@ var Game = {
     //keeps count of incorrectly answered questions
     unansweredCount : 0,
     //keeps count of unanswered questions
-    timerBetweenQuestions : 5,
-    //seconds allowed for each question result to be displayed
     playClicked : false,
     //used to keep track of wether or not the player has begun the game
     playAgainClicked : false,
@@ -47,15 +45,41 @@ var clockRunning = false;
 //used to reset and start clock
 
 var countingUp = false;
-//used to start and reset BetweenQuestions
+
+var timeBetweenQuestions = {
+    time : 0, 
+    
+    reset : function(){
+        timeBetweenQuestions.time = 0;
+        countingUp = false;
+    },
+    start : function() {
+        if (!countingUp){
+            intervalTwo = setInterval(timeBetweenQuestions.count, 1000);
+            countingUp = true;
+        }
+    },
+    count : function() {
+        timeBetweenQuestions.time++;
+        console.log(timeBetweenQuestions.time);
+        if(timeBetweenQuestions.time === 5) {
+            timeBetweenQuestions.stop();
+        }
+    },
+    stop : function() {
+            clearInterval(intervalTwo);
+            countDown.reset();
+            countDown.start();
+    }
+};
+//used to keep track of time between questions
 
 var countDown = {
     time : 10,
     
     reset : function() {
-        countDown.betweenQuestions();
         countDown.time = 10;
-        $("#display-timer").text(countDown.time);
+        $("#timer-display").text(countDown.time);
         clockRunning = false;
     },
     start : function() {
@@ -64,28 +88,18 @@ var countDown = {
             clockRunning = true;
         }
     },
-    betweenQuestions : function() {
+    stop : function() {
         clearInterval(interval);
-        if(countingUp) {
-        intervalTwo = setInterval(function (){
-            var y = 0;
-            y++;
-            if( y<=5 ){
-                $("#game").hide();
-                $("#")
-            }
-        }, 1000);
-        }
+        timeBetweenQuestions.reset();
+        timeBetweenQuestions.start();
     },
     count : function() {
         countDown.time--;
-        var x = countDown.time;
-        $("#display-timer").text(x);
-        console.log(x);
+        $("#timer-display").text(countDown.time);
         if(countDown.time === 0) {
-            countDown.reset();
+            countDown.stop();
         }
-    },
+    }
 };
 //seconds allowed for each question to be displayed
 
@@ -94,7 +108,7 @@ window.onload = function() {
     $("#answered-correct").hide();
     $("#answered-wrong").hide();
     $("#total-results").hide();
-}
+};
 
 $("#play").on("click", function(){
     $("#instructions").hide();
@@ -114,5 +128,9 @@ $("#play").on("click", function(){
     countDown.reset();
     countDown.start();
     //start countdown
+});
+
+$("#answers").on("click", function() {
+    var clickedAnswer = this.val();
 });
 
