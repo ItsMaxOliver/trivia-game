@@ -39,7 +39,7 @@
             
             <div class="col-5" id="timer">
                
-                <h3>You have <br><span id="timer-display">10</span> <br>seconds left<br>to tell me who sang the original version of the song.</h3>
+                <h3>You have <br><span id="timer-display"></span> <br>seconds left<br>to tell me who sang the original version of the song.</h3>
                 
             </div>
             
@@ -53,7 +53,14 @@
             
         </div>
         
-        <div class="row" id="results">
+        <div class="row" id="results-for-question">
+            <div class="col-12">
+                <h3 id="answered-correct">You got it!</h3>
+                <h3 id="answered-wrong">You are wrong.</h3>
+            </div>
+        </div>
+        
+        <div class="row" id="total-results">
             <div class="col-12">
                 <h3>You answered <span id="correct-answers"></span> questions correctly.</h3>
                 <h3>You answered <span id="incorrect-answers"></span> questions incorrectly.</h3>
