@@ -5,8 +5,6 @@ var Game = {
     //keeps count of incorrectly answered questions
     unansweredCount : 0,
     //keeps count of unanswered questions
-    timer: 10,
-    //seconds allowed for each question to be displayed
     timerBetweenQuestions : 5,
     //seconds allowed for each question result to be displayed
     playClicked : false,
@@ -45,9 +43,57 @@ var Game = {
 var totalCount = Game.correctCount + Game.wrongCount + Game.unansweredCount;
 //keeps track of number of questions that have cycled through
 
+var clockRunning = false;
+//used to reset and start clock
+
+var countingUp = false;
+//used to start and reset BetweenQuestions
+
+var countDown = {
+    time : 10,
+    
+    reset : function() {
+        countDown.betweenQuestions();
+        countDown.time = 10;
+        $("#display-timer").text(countDown.time);
+        clockRunning = false;
+    },
+    start : function() {
+        if(!clockRunning) {
+            interval = setInterval(countDown.count, 1000);
+            clockRunning = true;
+        }
+    },
+    betweenQuestions : function() {
+        clearInterval(interval);
+        if(countingUp) {
+        intervalTwo = setInterval(function (){
+            var y = 0;
+            y++;
+            if( y<=5 ){
+                $("#game").hide();
+                $("#")
+            }
+        }, 1000);
+        }
+    },
+    count : function() {
+        countDown.time--;
+        var x = countDown.time;
+        $("#display-timer").text(x);
+        console.log(x);
+        if(countDown.time === 0) {
+            countDown.reset();
+        }
+    },
+};
+//seconds allowed for each question to be displayed
+
 window.onload = function() {
     $("#game").hide();
-    $("#results").hide();
+    $("#answered-correct").hide();
+    $("#answered-wrong").hide();
+    $("#total-results").hide();
 }
 
 $("#play").on("click", function(){
@@ -65,7 +111,8 @@ $("#play").on("click", function(){
     $("#answers").append(" ");
     $("#answers").append(Game.q1.incorrect[2]);
     //displays q1.answerChoices
-    
+    countDown.reset();
+    countDown.start();
     //start countdown
 });
 
