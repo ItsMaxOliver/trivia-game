@@ -28,7 +28,7 @@
             <div class="col-12">
                 <h3>You will be given the name of a popular song.</h3>
                 <h3>You must click on the original artist before the time runs out.</h3>
-                <h3>You will have 10 seconds to answer each question.</h3>
+                <h3>You will have 6 seconds to answer each question.</h3>
                 <h3>Press play to start!</h3>
                 
                 <button id="play" type="button" class="btn btn-lg">Play</button>
@@ -45,13 +45,13 @@
             
             <div class="col-5" id="qanda">
                
-                <div id="question">placeholder</div>
+                <div id="question"></div>
                 <div id="empty"><p></p></div>
                 <div id="answers">
-                    <div id="answer-choice-1">placeholder</div>
-                    <div id="answer-choice-2">placeholder</div>
-                    <div id="answer-choice-3">placeholder</div>
-                    <div id="answer-choice-4">placeholder</div>
+                    <div id="answer-choice-1"></div>
+                    <div id="answer-choice-2"></div>
+                    <div id="answer-choice-3"></div>
+                    <div id="answer-choice-4"></div>
                 </div>
                 <h3 id="answered-correct">You got it!</h3>
                 <h3 id="answered-wrong">You are wrong.</h3>
@@ -62,8 +62,8 @@
         
         <div class="row" id="total-results">
             <div class="col-12">
-                <h3>You answered <span id="correct-answers"></span> questions correctly.</h3>
-                <h3>You answered <span id="incorrect-answers"></span> questions incorrectly.</h3>
+                <h3>You got <span id="correct-answers"></span> correct.</h3>
+                <h3>You got <span id="incorrect-answers"></span> wrong.</h3>
 
                 <button id="play-again" type="button" class="btn btn-lg">Play Again</button>
             </div>

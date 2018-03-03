@@ -3,8 +3,8 @@ var Game = {
     //keeps count of correctly answered questions
     wrongCount : 0,
     //keeps count of incorrectly answered questions
-    unansweredCount : 0,
-    //keeps count of unanswered questions
+    answerClicked : false,
+    //keeps track if the answer clicked was right or not
 
     q1 : {
         question : "Torn",
@@ -38,6 +38,9 @@ var songs = [Game.q1, Game.q2, Game.q3, Game.q4, Game.q5];
 var totalCount = 0;
 //keeps track of number of questions that have cycled through
 
+var interval;
+var intervalTwo;
+
 var timeBetweenQuestions = {
     time : 0, 
     
@@ -47,18 +50,25 @@ var timeBetweenQuestions = {
     },
     start : function() {
         if (!countingUp){
+            clearInterval(intervalTwo);
             intervalTwo = setInterval(timeBetweenQuestions.count, 1000);
             countingUp = true;
             $("#question").hide();
             $("#answers").hide();
         }
-        $("#answered-correct").show();
-        $("#answered-wrong").show();
+        
+        if(!Game.answerClicked) {
+            $("#answered-wrong").show();
+        }
+        else {
+            $("#answered-correct").show();
+            Game.answerClicked = false;
+        }
     },
     count : function() {
         timeBetweenQuestions.time++;
         
-        if(timeBetweenQuestions.time === 5) {
+        if(timeBetweenQuestions.time === 2) {
             timeBetweenQuestions.stop();
         }
     },
@@ -66,25 +76,26 @@ var timeBetweenQuestions = {
         clearInterval(intervalTwo);
         $("#question").show();
         $("#answers").show();
-//        totalCount;
-        if (totalCount <= 5){
-        countDown.reset();
-        countDown.start();
+        
+        if (totalCount <= 5) {
+            countDown.reset();
+            countDown.start();
         }
     }
 };
 //used to keep track of time between questions
 
 var countDown = {
-    time : 10,
+    time : 6,
     
     reset : function() {
-        countDown.time = 10;
+        countDown.time = 6;
         $("#timer-display").text(countDown.time);
         clockRunning = false;
     },
     start : function() {
         if(!clockRunning) {
+            clearInterval(interval);
             interval = setInterval(countDown.count, 1000);
             showQuestionAndAnswers();
             clockRunning = true;
@@ -124,8 +135,6 @@ $("#play").on("click", function(){
     totalCount = 0;
     Game.correctCount = 0;
     Game.wrongCount = 0;
-    Game.unansweredCount = 0;
-    clearInterval(countDown.start.interval);
     
     countDown.reset();
     countDown.start();
@@ -142,6 +151,10 @@ $("#play-again").on("click", function(){
     //hides #game
     $("#total-results").hide();
     //hides #total-results
+//    $("#play").hide();
+//    setTimeout(function(){
+//        $("#play").show();
+//    }, 4000);
 });
 //resets game
 
@@ -161,6 +174,35 @@ function showQuestionAndAnswers() {
 
 function showResults() {
     $("#game").hide();
+    $("#correct-answers").text(Game.correctCount);
+    Game.wrongCount = totalCount - Game.correctCount;
+    $("#incorrect-answers").text(Game.wrongCount);
     $("#total-results").show();
 }
 //shows when there are no more questions
+
+
+
+$("#answer-choice-2").on("click", function correct(){
+    Game.answerClicked = true;
+    Game.correctCount = Game.correctCount + 1;
+    countDown.stop();
+})
+
+$("#answer-choice-1").on("click", function wrong() {
+    Game.answerClicked = false;
+    Game.wrongCount = Game.wrongCount + 1;
+    countDown.stop();
+});
+
+$("#answer-choice-3").on("click", function wrong() {
+    Game.answerClicked = false;
+    Game.wrongCount = Game.wrongCount + 1;
+    countDown.stop();
+});
+
+$("#answer-choice-4").on("click", function wrong() {
+    Game.answerClicked = false;
+    Game.wrongCount = Game.wrongCount + 1;
+    countDown.stop();
+});
