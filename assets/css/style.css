@@ -45,3 +45,19 @@ button {
 #qanda {
     vertical-align: top;
 }
+
+#answer-choice-1:hover {
+    background-color: lightgreen;
+}
+
+#answer-choice-2:hover {
+    background-color: lightgreen;
+}
+
+#answer-choice-3:hover {
+    background-color: lightgreen;
+}
+
+#answer-choice-4:hover {
+    background-color: lightgreen;
+}

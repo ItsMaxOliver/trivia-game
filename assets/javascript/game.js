@@ -5,42 +5,37 @@ var Game = {
     //keeps count of incorrectly answered questions
     unansweredCount : 0,
     //keeps count of unanswered questions
-    playClicked : false,
-    //used to keep track of wether or not the player has begun the game
-    playAgainClicked : false,
-    //used to keep track of wether or not the player wants to play again
-    answerClicked : false
-    //used to keep track of wether or not the player has clicked an answer
-}
-var songs = [
-    q1 = {
+
+    q1 : {
         question : "Torn",
         answer : "Ednaswap",
         incorrect : ["Natalie Imbruglia", "Hands Like Houses", "Cassadee Pope"]
     },
-    q2 = {
+    q2 : {
         question : "I Love Rock N Roll",
         answer : "Arrows",
         incorrect : ["Joan Jett & The Blackhearts", "Britney Spears", "Tiny Tim"]
     },
-    q3 = {
+    q3 : {
         question : "Girls Just Wanna Have Fun",
         answer : "Robert Hazard",
         incorrect : ["Cyndi Lauper", "Miley Cyrus", "Greg Laswell"]
     },
-    q4 = {
+    q4 : {
         question : "Respect",
         answer : "Otis Redding",
         incorrect : ["Aretha Franklin", "Diana Ross", "Louisa Johnson"]
     },
-    q5 = {
+    q5 : {
         question : "I Want Candy",
         answer : "The Strangeloves",
         incorrect : ["Bow Wow Wow", "Aaron Carter", "Cherubs"]
     }
-]
+};
 
-var totalCount = Game.correctCount + Game.wrongCount + Game.unansweredCount;
+var songs = [Game.q1, Game.q2, Game.q3, Game.q4, Game.q5];
+    
+var totalCount = 0;
 //keeps track of number of questions that have cycled through
 
 var timeBetweenQuestions = {
@@ -57,6 +52,8 @@ var timeBetweenQuestions = {
             $("#question").hide();
             $("#answers").hide();
         }
+        $("#answered-correct").show();
+        $("#answered-wrong").show();
     },
     count : function() {
         timeBetweenQuestions.time++;
@@ -69,6 +66,7 @@ var timeBetweenQuestions = {
         clearInterval(intervalTwo);
         $("#question").show();
         $("#answers").show();
+        totalCount;
         countDown.reset();
         countDown.start();
     }
@@ -86,11 +84,15 @@ var countDown = {
     start : function() {
         if(!clockRunning) {
             interval = setInterval(countDown.count, 1000);
+            showQuestionAndAnswers();
             clockRunning = true;
         }
+        $("#answered-correct").hide();
+        $("#answered-wrong").hide();
     },
     stop : function() {
         clearInterval(interval);
+        totalCount++;
         timeBetweenQuestions.reset();
         timeBetweenQuestions.start();
     },
@@ -121,19 +123,46 @@ $("#play").on("click", function(){
     countDown.reset();
     countDown.start();
     //start countdown
+    showQuestionAndAnswers();
+    //show question
+    //show answers
+    totalCount = 0;
+    Game.correctCount = 0;
+    Game.wrongCount = 0;
+    Game.unansweredCount = 0;
+    clearInterval(countDown.start.interval);
 });
 
-//function showQuestion() {
-//                for (var i = 0; i < songs.lenth; i++) {
-//                        $("#question").text(songs[i].question);
-//                        //displays q1
-//                        $("#answers").append(songs[i].answer);
-//                        $("#answers").append(" ");
-//                        $("#answers").append(songs[i].incorrect[0]);
-//                        $("#answers").append(" ");
-//                        $("#answers").append(songs[i].incorrect[1]);
-//                        $("#answers").append(" ");
-//                        $("#answers").append(songs[i].incorrect[2]);
-//                        //displays q1.answerChoices
-//                }
-//            };
+$("#play-again").on("click", function(){
+    $("#instructions").show();
+    //displays #instructions
+    $("#game").hide();
+    //hides #game
+    $("#total-results").hide();
+    //hides #total-results
+    totalCount = 0;
+    Game.correctCount = 0;
+    Game.wrongCount = 0;
+    Game.unansweredCount = 0;
+});
+//resets game
+
+function showQuestionAndAnswers() {
+    if (totalCount < songs.length) {
+    $("#question").text(songs[totalCount].question);
+    $("#answer-choice-1").text(songs[totalCount].incorrect[2]);
+    $("#answer-choice-2").text(songs[totalCount].answer);
+    $("#answer-choice-3").text(songs[totalCount].incorrect[0]);
+    $("#answer-choice-4").text(songs[totalCount].incorrect[1]);
+    }
+    else {
+        showResults();
+    }
+}
+//shows question and answer choices
+
+function showResults() {
+    $("#game").hide();
+    $("#total-results").show();
+}
+//shows when there are no more questions
