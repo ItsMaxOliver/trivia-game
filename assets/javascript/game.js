@@ -140,8 +140,7 @@ $("#play").on("click", function(){
     countDown.start();
     //start countdown
     showQuestionAndAnswers();
-    //show question
-    //show answers
+    //shows question and answer choices
 });
 
 $("#play-again").on("click", function(){
@@ -151,10 +150,6 @@ $("#play-again").on("click", function(){
     //hides #game
     $("#total-results").hide();
     //hides #total-results
-//    $("#play").hide();
-//    setTimeout(function(){
-//        $("#play").show();
-//    }, 4000);
 });
 //resets game
 
@@ -181,13 +176,11 @@ function showResults() {
 }
 //shows when there are no more questions
 
-
-
 $("#answer-choice-2").on("click", function correct(){
     Game.answerClicked = true;
     Game.correctCount = Game.correctCount + 1;
     countDown.stop();
-})
+});
 
 $("#answer-choice-1").on("click", function wrong() {
     Game.answerClicked = false;
