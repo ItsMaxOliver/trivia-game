@@ -66,9 +66,11 @@ var timeBetweenQuestions = {
         clearInterval(intervalTwo);
         $("#question").show();
         $("#answers").show();
-        totalCount;
+//        totalCount;
+        if (totalCount <= 5){
         countDown.reset();
         countDown.start();
+        }
     }
 };
 //used to keep track of time between questions
@@ -119,6 +121,11 @@ $("#play").on("click", function(){
     //hides #instructions
     $("#game").show();
     //displays #game
+    totalCount = 0;
+    Game.correctCount = 0;
+    Game.wrongCount = 0;
+    Game.unansweredCount = 0;
+    clearInterval(countDown.start.interval);
     
     countDown.reset();
     countDown.start();
@@ -126,11 +133,6 @@ $("#play").on("click", function(){
     showQuestionAndAnswers();
     //show question
     //show answers
-    totalCount = 0;
-    Game.correctCount = 0;
-    Game.wrongCount = 0;
-    Game.unansweredCount = 0;
-    clearInterval(countDown.start.interval);
 });
 
 $("#play-again").on("click", function(){
@@ -140,10 +142,6 @@ $("#play-again").on("click", function(){
     //hides #game
     $("#total-results").hide();
     //hides #total-results
-    totalCount = 0;
-    Game.correctCount = 0;
-    Game.wrongCount = 0;
-    Game.unansweredCount = 0;
 });
 //resets game
 
